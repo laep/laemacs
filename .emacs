@@ -66,3 +66,9 @@
 	("TI" . "green")
 	("CQ" . "yellow")
 	("PRD" . "red")))
+
+
+;; clean up the interface
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
