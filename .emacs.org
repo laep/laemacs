@@ -66,6 +66,11 @@ Extra archives where emacs can search for extensions
  #+BEGIN_SRC emacs-lisp
  (evil-mode 1)
  #+END_SRC
+** Evil magit
+*** Enable evil magit
+ #+BEGIN_SRC emacs-lisp
+ (require 'evil-magit)
+ #+END_SRC
 ** Nlinum-relative (inactive)
    Plugin used for relative line numbers.
 
