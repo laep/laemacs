@@ -71,6 +71,16 @@ Extra archives where emacs can search for extensions
  #+BEGIN_SRC emacs-lisp
  (require 'evil-magit)
  #+END_SRC
+** Evil surround
+   Allows to change the character surrounding a group of characters
+*** evil surround enabled
+  #+BEGIN_SRC emacs-lisp
+    (require 'evil-surround)
+  #+END_SRC
+*** evil surroung config
+  #+BEGIN_SRC emacs-lisp
+    (global-evil-surround-mode 1)
+  #+END_SRC
 ** Nlinum-relative (inactive)
    Plugin used for relative line numbers.
 
@@ -89,7 +99,7 @@ Extra archives where emacs can search for extensions
 *** Reveal configurations
     Choose reveal root folder
  #+BEGIN_SRC emacs-lisp
-(setq org-reveal-root "file:///~/software/reveal.js")
+(setq org-reveal-root "file:///home/c095208/software/reveal.js")
  #+END_SRC
 ** Remember
    Remember is a plugin that allows you to take quick notes
