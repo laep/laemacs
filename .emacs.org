@@ -131,6 +131,12 @@ Displays the lines globally
 	  ("CQ" . "yellow")
 	  ("PRD" . "red")))
  #+END_SRC
+*** Pretty Entities
+    org converts latex symbols into the corresponding image symbols
+ #+BEGIN_SRC emacs-lisp
+(setq org-pretty-entities t)
+ #+END_SRC
+    
 * Emacs Interfa
 ** Remove menu bar
  #+BEGIN_SRC emacs-lisp
