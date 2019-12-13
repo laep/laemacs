@@ -1,0 +1,154 @@
+#+TITLE: LAEMACS (emacs configurations file)
+#+AUTHOR: Andre Rosendo
+#+EMAIL: andre.rosendo@hotmail.com
+
+* Package.el
+Added by Package.el.  This must come before configurations of
+installed packages.  Don't delete this line.  If you don't want it,
+just comment it out by adding a semicolon to the start of the line.
+You may delete these explanatory comments.
+
+#+BEGIN_SRC emacs-lisp
+(package-initialize)
+#+END_SRC
+
+* Custom
+** Custom-set-variables
+ custom-set-variables was added by Custom.
+ If you edit it by hand, you could mess it up, so be careful.
+ Your init file should contain only one such instance.
+ If there is more than one, they won't work right.
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (tangotango)))
+ '(custom-safe-themes
+   (quote
+    ("713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" default)))
+ '(inhibit-startup-screen t)
+ '(initial-buffer-choice (quote remember-notes))
+ '(package-selected-packages
+   (quote
+    (ox-reveal nlinum-relative org-plus-contrib org org-journal evil))))
+#+END_SRC
+** Custom-set-faces
+custom-set-faces was added by Custom.
+If you edit it by hand, you could mess it up, so be careful.
+Your init file should contain only one such instance.
+If there is more than one, they won't work right.
+
+#+BEGIN_SRC emacs-lisp
+ (custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  )
+#+END_SRC
+* Package-archives
+Extra archives where emacs can search for extensions
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+#+END_SRC
+* Plugins
+** Evil plugin
+   Evil is a plugin that mimmicks vim's glorious commands
+*** Enable evil plugin
+ #+BEGIN_SRC emacs-lisp
+ (require 'evil)
+ #+END_SRC
+*** evil configurations
+ #+BEGIN_SRC emacs-lisp
+ (evil-mode 1)
+ #+END_SRC
+** Nlinum-relative (inactive)
+   Plugin used for relative line numbers.
+
+   Corrently using emacs default relative line number
+*** Enable nlinum relative
+ #+BEGIN_SRC emacs-lisp
+  ;(require 'nlinum-relative)
+ #+END_SRC
+** Reveal.js
+   Reveal is an org plugin to export into java scripts presentations
+   using reveal.js
+*** Enable reveal
+ #+BEGIN_SRC emacs-lisp
+    (require 'ox-reveal)
+ #+END_SRC
+*** Reveal configurations
+    Choose reveal root folder
+ #+BEGIN_SRC emacs-lisp
+(setq org-reveal-root "file:///~/software/reveal.js")
+ #+END_SRC
+** Remember
+   Remember is a plugin that allows you to take quick notes
+   and save them in a new buffer while you do your main work
+*** Enable remember
+ #+BEGIN_SRC emacs-lisp
+    (require 'remember)
+ #+END_SRC
+* Display Relative Line Number
+Display line numbers in visual mode (counts collapsed lines as just one line).
+Displays the lines globally
+ #+BEGIN_SRC emacs-lisp
+(setq display-line-numbers-type 'visual)
+(global-display-line-numbers-mode)
+ #+END_SRC
+* Org Mode
+** Org Mode configurations
+*** Start in org mode
+ #+BEGIN_SRC emacs-lisp
+  (setq initial-major-mode 'org-mode)
+ #+END_SRC
+*** Hide leading starts
+    Removes extra starts on the org headers
+ #+BEGIN_SRC emacs-lisp
+  (setq org-hide-leading-stars t)
+ #+END_SRC
+*** Org default notes file
+ #+BEGIN_SRC emacs-lisp
+ (setq org-default-notes-file (concat org-directory "/notes.org"))
+ #+END_SRC
+*** Todo Key words
+ #+BEGIN_SRC emacs-lisp
+  (setq org-todo-keywords
+	'((sequence "TODO" "|" "DONE")
+          (sequence "DEV" "TI" "CQ" "|" "PRD")))
+ #+END_SRC
+*** Keywords Faces
+ #+BEGIN_SRC emacs-lisp
+ (setq org-todo-keyword-faces
+	'(("TODO" . org-warning)
+	  ("DONE" . org-done)
+          ("DEV" . "green")
+	  ("TI" . "green")
+	  ("CQ" . "yellow")
+	  ("PRD" . "red")))
+ #+END_SRC
+* Emacs Interfa
+** Remove menu bar
+ #+BEGIN_SRC emacs-lisp
+ (menu-bar-mode -1)
+ #+END_SRC
+** Remove tool bar
+ #+BEGIN_SRC emacs-lisp
+ (tool-bar-mode -1)
+ #+END_SRC
+** Remove scroll bar
+ #+BEGIN_SRC emacs-lisp
+ (scroll-bar-mode -1)
+ #+END_SRC
+** Start maximized
+ #+BEGIN_SRC emacs-lisp
+ (toggle-frame-maximized)
+ #+END_SRC
+* Key Mappings
+ #+BEGIN_SRC emacs-lisp
+ (define-key global-map "\C-cc" 'org-capture)
+ #+END_SRC
