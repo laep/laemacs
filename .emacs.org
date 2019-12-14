@@ -1,4 +1,4 @@
-#+TITLE: LAEMACS (emacs configurations file)
+﻿#+TITLE: LAEMACS (emacs configurations file)
 #+AUTHOR: Andre Rosendo
 #+EMAIL: andre.rosendo@hotmail.com
 
@@ -45,6 +45,7 @@ Extra archives where emacs can search for extensions
 **  Packages to install
 #+BEGIN_SRC emacs-lisp
  (ensure-package-installed
+  'mic-paren
   'solarized-theme
   'org
   'evil
@@ -92,6 +93,19 @@ If there is more than one, they won't work right.
   )
 #+END_SRC
 * Plugins
+** Mic paren
+   Matches parenthesis and hilights them
+*** Enable mic paren
+#+BEGIN_SRC emacs-lisp
+(paren-activate)
+#+END_SRC
+*** Mic paren configurations
+#+BEGIN_SRC emacs-lisp
+(setq paren-dont-touch-blink t)
+(setq paren-highlight-offscreen t)
+(setq paren-match-face 'highlight)
+(setq paren-sexp-mode t)
+#+END_SRC
 ** Ido mode
 *** Easy buffer switching
 #+BEGIN_SRC emacs-lisp
