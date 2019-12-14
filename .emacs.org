@@ -7,11 +7,53 @@ Added by Package.el.  This must come before configurations of
 installed packages.  Don't delete this line.  If you don't want it,
 just comment it out by adding a semicolon to the start of the line.
 You may delete these explanatory comments.
-
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+#+END_SRC
+* Package-archives
+Extra archives where emacs can search for extensions
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+#+END_SRC
+* Initialize package.el
 #+BEGIN_SRC emacs-lisp
 (package-initialize)
 #+END_SRC
-
+* Automatic Installation of Packages
+** Check if packages are installed
+   If packages aren't installed:
+   - Refrash package repos (only does it once)
+   - Install the package
+#+BEGIN_SRC emacs-lisp
+(defun ensure-package-installed (&rest packages)
+  "Assure every package is installed, ask for installation if it’s not.
+   Return a list of installed packages or nil for every skipped package."
+  (mapcar
+   (lambda (package)
+     (let ((refresh nil))
+       (unless (package-installed-p package)
+	 (if (refresh)
+	     (package-install package)
+	   (progn 
+	     (package-refresh-contents)
+	     (setq refresh t)
+	     (package-install package))))))
+   packages)
+  )
+#+END_SRC
+**  Packages to install
+#+BEGIN_SRC emacs-lisp
+ (ensure-package-installed
+  'solarized-theme
+  'org
+  'evil
+  'evil-surround
+  'magit
+  'evil-magit 
+  'ox-reveal
+ )
+#+END_SRC
 * Custom
 ** Custom-set-variables
  custom-set-variables was added by Custom.
@@ -25,10 +67,10 @@ You may delete these explanatory comments.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (tangotango)))
+ '(custom-enabled-themes (quote (solarized-dark)))
  '(custom-safe-themes
    (quote
-    ("713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" default)))
+    ("2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" default)))
  '(inhibit-startup-screen t)
  '(initial-buffer-choice (quote remember-notes))
  '(package-selected-packages
@@ -49,13 +91,14 @@ If there is more than one, they won't work right.
   ;; If there is more than one, they won't work right.
   )
 #+END_SRC
-* Package-archives
-Extra archives where emacs can search for extensions
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-#+END_SRC
 * Plugins
+** Ido mode
+*** Easy buffer switching
+#+BEGIN_SRC emacs-lisp
+(setq indo-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+#+END_SRC
 ** Evil plugin
    Evil is a plugin that mimmicks vim's glorious commands
 *** Enable evil plugin
@@ -99,7 +142,7 @@ Extra archives where emacs can search for extensions
 *** Reveal configurations
     Choose reveal root folder
  #+BEGIN_SRC emacs-lisp
-(setq org-reveal-root "file:///home/c095208/software/reveal.js")
+(setq org-reveal-root (concat "file:///" (expand-file-name "reveal.js" user-emacs-directory)))
  #+END_SRC
 ** Remember
    Remember is a plugin that allows you to take quick notes
