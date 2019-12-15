@@ -21,28 +21,28 @@
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
   #+END_SRC
 
-  
+
 * Automatic Installation of Packages
 ** Check if packages are installed
    If packages aren't installed:
    - Refrash package repos (only does it once)
    - Install the package
    #+BEGIN_SRC emacs-lisp
-(defun ensure-package-installed (&rest packages)
-  "Assure every package is installed, ask for installation if it’s not.
-   Return a list of installed packages or nil for every skipped package."
-  (mapcar
-   (lambda (package)
-     (let ((refresh nil))
-       (unless (package-installed-p package)
-	 (if refresh
-	     (package-install package)
-	   (progn 
-	     (package-refresh-contents)
-	     (setq refresh t)
-	     (package-install package))))))
-   packages)
-  )
+     (defun ensure-package-installed (&rest packages)
+       "Assure every package is installed, ask for installation if it’s not.
+        Return a list of installed packages or nil for every skipped package."
+       (mapcar
+        (lambda (package)
+          (let ((refresh nil))
+            (unless (package-installed-p package)
+              (if refresh
+                  (package-install package)
+                (progn
+                  (package-refresh-contents)
+                  (setq refresh t)
+                  (package-install package))))))
+        packages)
+       )
    #+END_SRC
 **  Packages to install
    #+BEGIN_SRC emacs-lisp
@@ -54,7 +54,7 @@
   'evil
   'evil-surround
   'magit
-  'evil-magit 
+  'evil-magit
   'ox-reveal
   'lsp-mode
   'lsp-java
@@ -67,7 +67,7 @@
  )
    #+END_SRC
 
-   
+
 * Use Package
   #+BEGIN_SRC emacs-lisp
 (require 'use-package)
@@ -78,8 +78,8 @@
   #+BEGIN_SRC emacs-lisp
 (load-theme 'solarized-dark t)
   #+END_SRC
-  
-  
+
+
 *  Pcre2el
 
   #+BEGIN_SRC emacs-lisp
@@ -108,7 +108,7 @@
 
 
 
-* Evil 
+* Evil
   #+BEGIN_SRC emacs-lisp
     (use-package evil
       :init
@@ -133,8 +133,8 @@
       :ensure t)
 
   #+END_SRC
- 
-  
+
+
 * Reveal
 
   #+BEGIN_SRC emacs-lisp
@@ -143,7 +143,7 @@
   :config
   (setq org-reveal-root (concat "file:///" (expand-file-name "reveal.js" user-emacs-directory))))
   #+END_SRC
-  
+
 
 * Remember
   #+BEGIN_SRC emacs-lisp
@@ -164,34 +164,34 @@
 * Org Mode configurations
   #+BEGIN_SRC emacs-lisp
     (use-package org
-		 :ensure t
-		 :config
-		 (setq initial-major-mode 'org-mode)
-		 (setq org-hide-leading-stars t)
-		 (setq org-default-notes-file (concat org-directory "/notes.org"))
-		 (setq org-todo-keywords
-		       '((sequence "TODO" "|" "DONE")
-			 (sequence "DEV" "TI" "CQ" "|" "PRD")))
-		 (setq org-todo-keyword-faces
-		       '(("TODO" . org-warning)
-			 ("DONE" . org-done)
-			 ("DEV" . "green")
-			 ("TI" . "green")
-			 ("CQ" . "yellow")
-			 ("PRD" . "red")))
-		 (setq org-pretty-entities t))
+                 :ensure t
+                 :config
+                 (setq initial-major-mode 'org-mode)
+                 (setq org-hide-leading-stars t)
+                 (setq org-default-notes-file (concat org-directory "/notes.org"))
+                 (setq org-todo-keywords
+                       '((sequence "TODO" "|" "DONE")
+                         (sequence "DEV" "TI" "CQ" "|" "PRD")))
+                 (setq org-todo-keyword-faces
+                       '(("TODO" . org-warning)
+                         ("DONE" . org-done)
+                         ("DEV" . "green")
+                         ("TI" . "green")
+                         ("CQ" . "yellow")
+                         ("PRD" . "red")))
+                 (setq org-pretty-entities t))
   #+END_SRC
-    
-   
+
+
 * Ibuffer
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (defalias 'list-buffers 'ibuffer)
-#+END_SRC
+  #+END_SRC
 
 
 * Interface Tweaks
 
- #+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
  (global-visual-line-mode t)
  (setq inhibit-startup-screen t)
  (setq initial-buffer-choice 'remember-notes)
@@ -199,14 +199,14 @@
  (tool-bar-mode -1)
  (scroll-bar-mode -1)
  (toggle-frame-maximized)
- #+END_SRC
+  #+END_SRC
 
- 
+
 * Global Key Mappings
- #+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (define-key global-map "\C-cc" 'org-capture)
- #+END_SRC
- 
+  #+END_SRC
+
 
 * Lsp mode
   #+BEGIN_SRC emacs-lisp
@@ -237,7 +237,7 @@
 (use-package dap-java :after (lsp-java))
 
 (add-hook 'java-mode-hook 'flycheck-mode)
-#+END_SRC
+  #+END_SRC
 
 
 * Treemacs
@@ -324,4 +324,17 @@
 (use-package treemacs-magit
   :after treemacs magit
   :ensure t)
-#+END_SRC
+  #+END_SRC
+
+
+* Tabs are spaces
+  #+BEGIN_SRC emacs-lisp
+  (setq-default indent-tabs-mode nil)
+  #+END_SRC
+
+
+* Whitespace mode
+  #+BEGIN_SRC emacs-lisp
+(setq whitespace-style '(face trailing tabs  lines-tail empty space-after-tab space-before-tab))
+  (global-whitespace-mode 1)
+  #+END_SRC
