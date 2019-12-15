@@ -192,6 +192,7 @@
 * Interface Tweaks
 
  #+BEGIN_SRC emacs-lisp
+ (global-visual-line-mode t)
  (setq inhibit-startup-screen t)
  (setq initial-buffer-choice 'remember-notes)
  (menu-bar-mode -1)
