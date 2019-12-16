@@ -65,6 +65,7 @@
   'flycheck
   'treemacs-evil
   'auto-complete
+  'helm
  )
    #+END_SRC
 
@@ -186,7 +187,7 @@
 
 * Ibuffer
   #+BEGIN_SRC emacs-lisp
-(defalias 'list-buffers 'ibuffer)
+;;(defalias 'list-buffers 'ibuffer)
   #+END_SRC
 
 
@@ -213,31 +214,48 @@
   #+BEGIN_SRC emacs-lisp
 (require 'cc-mode)
 (setq lsp-prefer-flymake nil)
-
 (use-package projectile :ensure t)
 (use-package yasnippet :ensure t
-:config (yas-global-mode 1))
-
-(use-package lsp-mode :ensure t)
+:config (setq yas-global-mode 1)
+)
+(use-package lsp-mode :ensure t
+:config (setq lsp-auto-configure t)
+(setq lsp-enable-indentation t)
+(setq lsp-enable-on-type-formatting t)
+)
 (use-package hydra :ensure t)
 (use-package company-lsp :ensure t
   :config (push 'company-lsp company-backends)
-  (setq company-lsp-enable-snippet t)
-  (setq company-lsp-enable-recompletio t))
+  (setq company-lsp-enable-snippet nil)
+  (setq company-lsp-enable-recompletion nil)
+(setq company-lsp-async t)
+)
 (use-package lsp-ui :ensure t
-  :hook lsp-mode)
-(use-package lsp-java :ensure t :after lsp
-  :hook java-mode)
+:config (add-hook 'lsp-mode 'lsp-ui)
 
+)
+(use-package lsp-java :ensure t :after lsp
+  :config (add-hook 'java-mode-hook 'lsp))
+
+(use-package company
+  :config
+  (setq company-tooltip-limit 10
+	company-idle-delay 0.05
+	company-minimum-prefix-length 2
+	company-show-numbers t
+	company-tooltip-align-annotations t))
 (use-package dap-mode
   :ensure t :after lsp-mode
   :config
   (dap-mode t)
-  (dap-ui-mode t))
+  (dap-ui-mode t)
+(tooltip-mode 1)
+(require 'dap-java))
 
 (use-package dap-java :after (lsp-java))
 
 (add-hook 'java-mode-hook 'flycheck-mode)
+
   #+END_SRC
 
 
@@ -296,7 +314,7 @@
     (treemacs-fringe-indicator-mode t)
     (pcase (cons (not (null (executable-find "git")))
                  (not (null treemacs-python-executable)))
-      (`(t . t)
+                 (`(t . t)
        (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
@@ -344,11 +362,10 @@
 * Auto Complete
 
   #+BEGIN_SRC emacs-lisp
-  (use-package auto-complete
-  :config
- (global-auto-complete-mode t)
- (ac-config-default)
-(ac-flyspell-workaround))
+;;  (use-package auto-complete
+;;  :config
+;; (global-auto-complete-mode t)
+;; (ac-config-default))
   #+END_SRC
 
 
@@ -356,4 +373,11 @@
   #+BEGIN_SRC emacs-lisp
   (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+  #+END_SRC
+
+
+* Helm
+  #+BEGIN_SRC emacs-lisp
+;;  (use-package helm :ensure t
+;;  :config (require 'helm-config))
   #+END_SRC
