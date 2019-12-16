@@ -64,6 +64,7 @@
   'treemacs
   'flycheck
   'treemacs-evil
+  'auto-complete
  )
    #+END_SRC
 
@@ -337,4 +338,22 @@
   #+BEGIN_SRC emacs-lisp
 (setq whitespace-style '(face trailing tabs  lines-tail empty space-after-tab space-before-tab))
   (global-whitespace-mode 1)
+  #+END_SRC
+
+
+* Auto Complete
+
+  #+BEGIN_SRC emacs-lisp
+  (use-package auto-complete
+  :config
+ (global-auto-complete-mode t)
+ (ac-config-default)
+(ac-flyspell-workaround))
+  #+END_SRC
+
+
+* Flyspell
+  #+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
   #+END_SRC
