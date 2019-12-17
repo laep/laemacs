@@ -122,6 +122,8 @@
 
     (use-package evil-collection
       :after evil
+      :custom
+(evil-collection-company-use-tng nil)
       :ensure t
       :config
       (evil-collection-init))
@@ -226,7 +228,7 @@
 (use-package hydra :ensure t)
 (use-package company-lsp :ensure t
   :config (push 'company-lsp company-backends)
-  (setq company-lsp-enable-snippet nil)
+  (setq company-lsp-enable-snippet t)
   (setq company-lsp-enable-recompletion nil)
 (setq company-lsp-async t)
 )
@@ -362,13 +364,13 @@
 * Auto Complete
 
   #+BEGIN_SRC emacs-lisp
-;;  (use-package auto-complete
-;;  :config
-;; (global-auto-complete-mode t)
-;; (ac-config-default))
+  (use-package auto-complete
+  :config
+ (global-auto-complete-mode t)
+ (ac-config-default))
   #+END_SRC
 
-
+  
 * Flyspell
   #+BEGIN_SRC emacs-lisp
   (add-hook 'text-mode-hook 'flyspell-mode)
